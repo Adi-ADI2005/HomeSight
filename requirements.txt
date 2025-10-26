@@ -205,7 +205,6 @@ pyttsx3==2.99
 pytweening==1.2.0
 pytz==2024.2
 pywhatkit==5.4
-pywin32==311
 pyxnat==1.6.3
 PyYAML==6.0.2
 qrcode==8.0
@@ -276,4 +275,5 @@ zipp==3.21.0
 zope.event==5.1.1
 zope.interface==7.2
 zstandard==0.23.0
+
 
