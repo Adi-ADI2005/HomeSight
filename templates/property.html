@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeSight</title>
+<link rel="icon" type="png" sizes="32x32" href="{{ url_for('static', filename='logo.png') }}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  body { background-color: #000; color: #fff; }
+  .form-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px; border-radius: 20px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    max-width: 900px; margin: 100px auto;
+  }
+  .btn-search {
+    background: linear-gradient(90deg, #007bff, #00bfff);
+    color: #fff; border: none; padding: 12px 50px;
+    border-radius: 50px; font-weight: 600;
+  }
+  .btn-search:hover {
+    background: linear-gradient(90deg, #0056b3, #0099cc);
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <h2 class="text-center mb-4">🔍 Search Properties</h2>
+
+  <form method="POST" action="/property_result">
+    <div class="row g-4">
+      <!-- State -->
+      <div class="col-md-6 col-12">
+        <label for="state" class="form-label">State</label>
+        <select class="form-select" id="state" name="state" required>
+          <option selected disabled>Select State</option>
+          {% for state in states %}
+            <option value="{{ state }}">{{ state }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- City -->
+      <div class="col-md-6 col-12">
+        <label for="city" class="form-label">City</label>
+        <select class="form-select" id="city" name="city" required>
+          <option selected disabled>Select City</option>
+        </select>
+      </div>
+
+      <!-- Lowest & Highest Price -->
+      <div class="col-md-6 col-12">
+        <label for="lowPrice" class="form-label">Lowest Price in Lakh (₹)</label>
+        <input type="number" class="form-control" id="lowPrice" name="lowPrice" placeholder="Enter minimum price" required>
+      </div>
+
+      <div class="col-md-6 col-12">
+        <label for="highPrice" class="form-label">Highest Price Lakh (₹)</label>
+        <input type="number" class="form-control" id="highPrice" name="highPrice" placeholder="Enter maximum price" required>
+      </div>
+
+      <!-- BHK -->
+      <div class="col-md-6 col-12">
+        <label for="bhk" class="form-label">BHK Type</label>
+        <select class="form-select" id="bhk" name="bhk" required>
+          <option selected disabled>Select BHK</option>
+          <option>1 BHK</option>
+          <option>2 BHK</option>
+          <option>3 BHK</option>
+          <option>4 BHK</option>
+          <option>5 BHK</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <button type="submit" class="btn-search">Search</button>
+    </div>
+     <div class="text-center mt-3">
+      <a href="/index" class="btn btn-primary">🔙 Back to Home</a>
+    </div>
+  </form>
+</div>
+
+<!-- ✅ Dynamic City Update Script -->
+<script>
+document.getElementById("state").addEventListener("change", function() {
+  const state = this.value;
+
+  fetch("/get_cities", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"  // ✅ Important
+    },
+    body: JSON.stringify({ state: state }) // ✅ Send JSON properly
+  })
+  .then(response => {
+    if (!response.ok) throw new Error("Network response was not ok");
+    return response.json();
+  })
+  .then(data => {
+    const cityDropdown = document.getElementById("city");
+    cityDropdown.innerHTML = "<option selected disabled>Select City</option>";
+    data.cities.forEach(city => {
+      const option = document.createElement("option");
+      option.value = city;
+      option.textContent = city;
+      cityDropdown.appendChild(option);
+    });
+  })
+  .catch(error => console.error("Error fetching cities:", error));
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

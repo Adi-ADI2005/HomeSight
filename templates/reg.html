@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomeSight</title>
+<link rel="icon" type="png" sizes="32x32" href="{{ url_for('static', filename='logo.png') }}">
+
+  <!-- Bootstrap CSS for eye icon -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    * {margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}
+    body {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+    }
+    body::before {
+      content:"";
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      background-color: #000; /* Pure black background */
+
+      z-index:0;
+    }
+    .register-container {
+      background: rgba(0,0,0,0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 15px;
+      padding: 40px 30px;
+      width: 450px;
+      max-width: 95%;
+      text-align:center;
+      color:#fff;
+      box-shadow:0px 8px 25px rgba(0,0,0,0.5);
+      z-index:1;
+      position:relative;
+    }
+    .register-container h2 {
+      margin-bottom:20px;
+      font-size:28px;
+      font-weight:600;
+      color:#ff4c4c;
+    }
+    .register-container p.message {
+      font-size:16px;
+      margin-bottom:20px;
+      color:#ffd369;
+      min-height:24px;
+      transition:opacity 0.5s;
+    }
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+    .form-group input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-size: 14px;
+      padding: 10px 0 6px 0;
+      outline: none;
+    }
+    .form-group label {
+      position: absolute;
+      left: 0;
+      top: 10px;
+      color: #eee;
+      font-size: 14px;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -12px;
+      font-size: 12px;
+      color: #ffd369;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      background: #ff4c4c;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .btn:hover {background:#ffd369;color:#000;}
+    .login-link {margin-top:20px;font-size:14px;}
+    .login-link a {color:#ffd369;font-weight:600;text-decoration:none;}
+    .login-link a:hover {text-decoration:underline;}
+    .password-wrapper {position: relative;}
+    .password-wrapper i {
+      position:absolute; top:50%; right:0; transform:translateY(-50%);
+      cursor:pointer;color:#fff;
+    }
+    .name-row {
+      display: flex;
+      gap: 10px;
+    }
+    .name-row .form-group {flex:1;}
+    .mobile-row {
+      display:flex;
+      align-items:center;
+      gap:5px;
+      margin-bottom:25px;
+      width:100%;
+    }
+    .mobile-row span {
+      font-weight:bold;
+      color:#fff;
+      padding-right:5px;
+    }
+    .mobile-row .form-group {
+      flex:1;
+      position: relative;
+    }
+    .mobile-row .form-group input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-size: 14px;
+      padding: 10px 0 6px 0;
+      outline: none;
+    }
+    .mobile-row .form-group label {
+      position: absolute;
+      left: 0;
+      top: 10px;
+      color: #eee;
+      font-size: 14px;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    .mobile-row .form-group input:focus + label,
+    .mobile-row .form-group input:not(:placeholder-shown) + label {
+      top: -12px;
+      font-size: 12px;
+      color: #ffd369;
+    }
+    .captcha-box {
+      display:flex; align-items:center; justify-content:space-between;
+      border:2px solid #fff; padding:5px 10px; border-radius:5px; margin-bottom:15px;
+      font-weight:bold; font-size:16px; background: rgba(255,255,255,0.1);
+    }
+    .captcha-refresh {cursor:pointer;color:#ffd369;font-weight:bold;}
+    @media(max-width:480px) {
+      .register-container{padding:30px 20px;width:100%;margin:0 15px;}
+      .register-container h2{font-size:24px;}
+      .name-row{flex-direction:column;}
+      .mobile-row{flex-direction:row;}
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Sign Up</h2>
+    <p class="message" id="awareness-message"></p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <p style="color:{% if category=='error' %}#ff4c4c{% else %}#00ff99{% endif %}; margin-bottom:15px;">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/" autocomplete="off">
+      <!-- First Name + Last Name -->
+      <div class="name-row">
+        <div class="form-group">
+          <input type="text" name="first_name" required placeholder=" " autocomplete="off">
+          <label>First Name</label>
+        </div>
+        <div class="form-group">
+          <input type="text" name="last_name" required placeholder=" " autocomplete="off">
+          <label>Last Name</label>
+        </div>
+      </div>
+
+      <!-- Mobile number with +91 -->
+      <div class="mobile-row">
+        <span>+91</span>
+        <div class="form-group">
+          <input type="tel" name="mobile" id="mobile-number" required placeholder=" " autocomplete="off"> 
+          <label>Mobile Number</label>
+          <small id="mobile-error-msg" style="color:#ff4c4c; display:block; margin-top:5px;"></small>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div style="margin-top:15px;"></div>
+      <div class="form-group password-wrapper">
+        <input type="password" name="password" id="password" required placeholder=" ">
+        <label>Password</label>
+        <i class="bi bi-eye" id="togglePassword"></i>
+      </div>
+      <div class="form-group password-wrapper">
+        <input type="password" name="confirm_password" id="confirm-password" required placeholder=" ">
+        <label>Confirm Password</label>
+        <i class="bi bi-eye" id="toggleConfirmPassword"></i>
+        <small id="password-match-msg" style="color:#ff4c4c; display:block; margin-top:5px;"></small>
+      </div>
+
+      <!-- CAPTCHA -->
+      <div class="captcha-box">
+        <span id="captcha-label"></span>
+        <span class="captcha-refresh" id="refresh-captcha">&#x21bb;</span>
+      </div>
+      <div class="form-group">
+        <input type="text" name="captcha_input" id="captcha-input" required placeholder=" ">
+        <label>Enter CAPTCHA</label>
+      </div>
+      <input type="hidden" name="captcha_answer" id="captcha-answer">
+
+      <button type="submit" class="btn">Register</button>
+      <p class="login-link">
+  Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
+</p>
+
+    </form>
+  </div>
+
+  <script>
+    
+    // Password toggle
+    const togglePassword=document.getElementById("togglePassword");
+    const password=document.getElementById("password");
+    togglePassword.addEventListener("click",()=>{
+      const type=password.getAttribute("type")==="password"?"text":"password";
+      password.setAttribute("type",type);
+      togglePassword.classList.toggle("bi-eye"); togglePassword.classList.toggle("bi-eye-slash");
+    });
+    const toggleConfirmPassword=document.getElementById("toggleConfirmPassword");
+    const confirmPassword=document.getElementById("confirm-password");
+    toggleConfirmPassword.addEventListener("click",()=>{
+      const type=confirmPassword.getAttribute("type")==="password"?"text":"password";
+      confirmPassword.setAttribute("type",type);
+      toggleConfirmPassword.classList.toggle("bi-eye"); toggleConfirmPassword.classList.toggle("bi-eye-slash");
+    });
+
+    // Mobile number digits only
+    const mobileInput=document.getElementById("mobile-number");
+    const mobileErrorMsg = document.getElementById("mobile-error-msg");
+    mobileInput.addEventListener("input",()=>{
+      mobileInput.value=mobileInput.value.replace(/\D/g,'');
+      if(mobileInput.value.length !== 10 && mobileInput.value.length>0){
+        mobileErrorMsg.textContent = "Mobile number must be 10 digits";
+      } else {
+        mobileErrorMsg.textContent = "";
+      }
+    });
+
+    // Password match validation
+    const passwordMsg = document.getElementById("password-match-msg");
+    function checkPasswordMatch() {
+      if(confirmPassword.value === "") { passwordMsg.textContent = ""; return; }
+      if(password.value !== confirmPassword.value) { passwordMsg.textContent = "Passwords do not match"; }
+      else { passwordMsg.textContent = ""; }
+    }
+    confirmPassword.addEventListener("input", checkPasswordMatch);
+    password.addEventListener("input", checkPasswordMatch);
+
+    // Manual CAPTCHA
+    let num1,num2,captchaAnswer;
+    const captchaLabel=document.getElementById("captcha-label");
+    const captchaInput=document.getElementById("captcha-input");
+    const captchaHidden=document.getElementById("captcha-answer");
+    const refreshCaptcha=document.getElementById("refresh-captcha");
+
+    function generateCaptcha(){
+      num1=Math.floor(Math.random()*10)+1;
+      num2=Math.floor(Math.random()*10)+1;
+      captchaAnswer=num1+num2;
+      captchaLabel.textContent=`${num1} + ${num2} = ?`;
+      captchaHidden.value=captchaAnswer; // Send correct answer to backend
+    }
+
+    generateCaptcha();
+    refreshCaptcha.addEventListener("click",()=>{
+      generateCaptcha();
+      captchaInput.value="";
+    });
+  </script>
+</body>
+</html>

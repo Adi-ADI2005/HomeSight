@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeSight</title>
+<link rel="icon" type="png" sizes="32x32" href="{{ url_for('static', filename='logo.png') }}">
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<style>
+  body {
+    scroll-behavior: smooth;
+    background-color: #000;
+  }
+
+  section {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-container {
+    max-width: 900px;
+    width: 100%;
+    background: rgba(0,0,0,0.15);
+    padding: 30px;
+    border-radius: 20px;
+    color:#fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .navbar-brand img {
+    height: 45px;
+    width: auto;
+  }
+
+  .navbar h1 {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  .find-btn {
+    background: linear-gradient(90deg, #007bff, #00bfff);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 12px 40px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+  .find-btn:hover {
+    background: linear-gradient(90deg, #0056b3, #0099cc);
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    .desktop-nav {
+      display: none;
+    }
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
+  /* Section styling */
+.feature-section {
+  background-color: #000000ff; /* Dark background */
+  color: #fff; /* White text */
+  padding: 60px 20px;
+  text-align: center;
+  line-height: 1.8;
+  font-family: Arial, sans-serif;
+}
+
+/* Container for responsive layout */
+.feature-section .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Heading styling */
+.feature-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+/* Paragraph styling */
+.feature-section p {
+  font-size: 1.1rem;
+  text-align: justify;
+}
+
+/* Responsive for mobile */
+@media screen and (max-width: 768px) {
+  .feature-section h1 {
+    font-size: 2rem;
+  }
+
+  .feature-section p {
+    font-size: 1rem;
+  }
+}
+/* About section styling */
+.about-section {
+  background-color: #000000ff; /* dark background */
+  color: #fff; /* white text */
+  padding: 60px 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.8;
+}
+
+/* Container for width control */
+.about-section .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Heading styling */
+.about-section h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+  color: #ffcc00; /* highlight color */
+}
+
+/* Paragraph styling */
+.about-section p {
+  font-size: 1.1rem;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .about-section h1 {
+    font-size: 2rem;
+  }
+  
+  .about-section p {
+    font-size: 1rem;
+  }
+}
+/* === Contact Section === */
+  #contact {
+    padding: 60px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 1100px;
+    width: 100%;
+    gap: 30px;
+  }
+
+  @media (min-width: 768px) {
+    .contact-section {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: stretch;
+    }
+    .contact-info, .contact-form-wrapper {
+      flex: 0 0 48%;
+    }
+  }
+
+  /* === Contact Section === */
+  #contact {
+    padding: 60px 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-section {
+    display: flex;
+    flex-direction: column;
+    max-width: 1100px;
+    width: 100%;
+    gap: 30px;
+  }
+
+  @media (min-width: 768px) {
+    .contact-section {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .contact-icons-wrapper,
+    .contact-form-wrapper {
+      flex: 0 0 48%;
+    }
+  }
+
+  /* === Left: Icon-Only Contact Info === */
+  .contact-icons-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: #111;
+    padding: 40px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(117, 249, 76, 0.25);
+  }
+
+  .contact-heading {
+    font-size: 32px;
+    color: #75f94c;
+    text-align: center;
+  }
+
+  .contact-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  .contact-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    background: #75f94c;
+    color: #000;
+    font-size: 28px;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .contact-icons a:hover {
+    transform: scale(1.3);
+    background: #5bc743;
+  }
+
+  /* === Right: Contact Form === */
+  .contact-form-wrapper {
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(117, 249, 76, 0.25);
+  }
+
+  .contact-form .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .form-group {
+    flex: 1 1 calc(50% - 10px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group.full-width {
+    flex: 1 1 100%;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #ccc;
+  }
+
+  input,
+  textarea {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    background: #1a1a1a;
+    color: #fff;
+    outline: none;
+    transition: border 0.3s;
+  }
+
+  input:focus,
+  textarea:focus {
+    border-color: #75f94c;
+  }
+
+  .submit-btn {
+    background: #75f94c;
+    color: #000;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 20px;
+    transition: background 0.3s;
+  }
+
+  .submit-btn:hover {
+    background: #5bc743;
+  }
+
+  @media (max-width: 767px) {
+    .contact-section {
+      flex-direction: column;
+      gap: 40px;
+    }
+    .contact-icons a {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+    }
+    .contact-heading {
+      font-size: 28px;
+    }
+  }
+
+</style>
+
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <a class="navbar-brand mb-0 d-flex align-items-center" href="#">
+      <img src="static/logo.png" alt="Logo">
+    </a>
+
+    <div class="mx-auto text-white fw-bold">
+      <h1>Welcome</h1>
+    </div>
+
+    <div class="d-flex align-items-center">
+      <ul class="navbar-nav me-3 desktop-nav">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#feature">Feature</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+
+      <li class="nav-item dropdown ms-lg-3">
+        <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+          Hi {{ username }}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item text-danger" href="/logout" id="logout">Logout</a></li>
+        </ul>
+      </li>
+    </div>
+  </div>
+</nav>
+
+<!-- Home Section -->
+<section id="home" class="pt-5">
+  <div class="form-container mt-5">
+    <h2>🏠 House Details Form</h2>
+
+    <form method="POST" action="/index">
+      <div class="row g-4">
+
+        <!-- State Dropdown -->
+        <div class="col-md-4 col-12">
+          <label for="state" class="form-label">State</label>
+          <select class="form-select" id="state" name="state" required>
+            <option selected disabled>Select State</option>
+            {% for state in states %}
+              <option value="{{ state }}">{{ state }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- City Dropdown (Dynamic) -->
+        <div class="col-md-4 col-12">
+          <label for="city" class="form-label">City</label>
+          <select class="form-select" id="city" name="city" required>
+            <option selected disabled>Select City</option>
+          </select>
+        </div>
+
+        <!-- Property Type -->
+        <div class="col-md-4 col-12">
+          <label for="propertyType" class="form-label">Property Type</label>
+          <select class="form-select" id="propertyType" name="propertyType" required>
+            <option selected disabled>Select Property Type</option>
+            <option>Apartment</option>
+            <option>Independent House</option>
+            <option>Villa</option>
+          </select>
+        </div>
+
+        <!-- BHK -->
+        <div class="col-md-4 col-12">
+          <label for="bhk" class="form-label">BHK</label>
+          <select class="form-select" id="bhk" name="bhk" required>
+            <option selected disabled>Select BHK</option>
+            <option>1 BHK</option>
+            <option>2 BHK</option>
+            <option>3 BHK</option>
+            <option>4 BHK</option>
+            <option>5 BHK</option>
+          </select>
+        </div>
+
+        <!-- Furnished Status -->
+        <div class="col-md-4 col-12">
+          <label for="furnished" class="form-label">Furnished Status</label>
+          <select class="form-select" id="furnished" name="furnished" required>
+            <option selected disabled>Select Status</option>
+            <option>Furnished</option>
+            <option>Semi-Furnished</option>
+            <option>Unfurnished</option>
+          </select>
+        </div>
+
+        <!-- Size -->
+        <div class="col-md-4 col-12">
+          <label for="size" class="form-label">Size (in SqFt)</label>
+          <input type="number" class="form-control" id="size" name="size" placeholder="Enter property size" required>
+        </div>
+
+        <!-- Public Transport -->
+        <div class="col-md-4 col-12">
+          <label for="transport" class="form-label">Public Transport Accessibility</label>
+          <select class="form-select" id="transport" name="transport" required>
+            <option selected disabled>Select Accessibility</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+          </select>
+        </div>
+
+        <!-- Parking -->
+        <div class="col-md-4 col-12">
+          <label for="parking" class="form-label">Parking Space</label>
+          <select class="form-select" id="parking" name="parking" required>
+            <option selected disabled>Select Parking Space</option>
+            <option>YES</option>
+            <option>NO</option>
+          </select>
+        </div>
+
+        <!-- Security -->
+        <div class="col-md-4 col-12">
+          <label for="security" class="form-label">Security</label>
+          <select class="form-select" id="security" name="security" required>
+            <option selected disabled>Select Security</option>
+            <option>YES</option>
+            <option>NO</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary px-5 py-2">Submit</button>
+      </div>
+    </form>
+
+    
+
+    <div class="text-center mt-4">
+      <a href="{{ url_for('property') }}" class="find-btn">🔍 Find Property</a>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about-section">
+  <div class="container">
+    <h1>About Homeshati</h1>
+    <p>
+      Homeshati is a smart and easy-to-use platform designed to help people find the right house at the right price. It predicts the price of a house based on important details like the location, type of property, number of bedrooms, size, furnishing, and available facilities. Users simply enter information such as the state, city, property type (apartment, villa, or independent house), BHK, furnishing status, size in square feet, public transport accessibility, parking, and security features, and Homeshati gives an estimated price for the property.
+    </p>
+    <p>
+      Besides predicting house prices, Homeshati also helps users find properties that fit their budget. Users can set a price range, choose their preferred city, and select the number of bedrooms, and the system will suggest suitable properties within these criteria. This makes it easier for buyers to see only the houses they can afford, saving time and effort.
+    </p>
+    <p>
+      The platform is designed to be simple and user-friendly. The forms are easy to fill out, and the results are shown clearly with details about each property, the total number of properties found, and the average price. Homeshati combines data and smart algorithms to give accurate estimates and helpful recommendations, so users can make better decisions while buying a house.
+    </p>
+    
+  </div>
+</section>
+
+
+<section id="feature" class="feature-section">
+  <div class="container">
+    <h1>Features</h1>
+    <p>
+      HomeShati is a smart system that helps users predict house prices and find properties within their budget. It uses important features to give accurate results. To predict the price, it takes inputs like the state and city of the property, the type of property such as apartment or villa, the number of bedrooms (BHK), and the furnishing status, whether it is furnished, semi-furnished, or unfurnished. It also considers the size of the house in square feet, public transport accessibility, availability of parking, and security facilities. Users provide these details through a simple web form, and the system calculates the expected price using a trained machine learning model. In addition to price prediction, HomeShati can suggest properties that fit the user’s budget. Users can enter their preferred state and city, set a minimum and maximum price, and optionally filter by number of bedrooms or property type. The system searches the database and returns a list of suitable properties that match the user’s criteria. By combining price prediction and budget-based recommendations, HomeShati makes it easier for users to make informed decisions when buying or renting a house.
+    </p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-section">
+
+    <!-- Left: Icons -->
+    <div class="contact-icons-wrapper">
+      <h2 class="contact-heading">Contact Me</h2>
+      <div class="contact-icons">
+        <a href="mailto:myselfadi009@gmail.com" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="tel:+918280140085" title="Phone">
+          <i class="fas fa-phone-alt"></i>
+        </a>
+        <a href="https://t.me/yourusername" target="_blank" title="Telegram">
+          <i class="fab fa-telegram-plane"></i>
+        </a>
+        <a href="https://wa.me/918280140085" target="_blank" title="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://linkedin.com/in/myselfadi" target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://x.com/my_self__adi" target="_blank" title="X / Twitter">
+          <i class="fab fa-x-twitter"></i>
+        </a>
+        <a href="https://instagram.com/my_self_____adi" target="_blank" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: Contact Form -->
+    <div class="contact-form-wrapper">
+      <h2 class="contact-heading">Get in Touch</h2>
+      <form class="contact-form" action="mailto:myselfadi009@gmail.com" method="POST" enctype="text/plain">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group full-width">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Write your message" required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn">Submit</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 🔄 Dynamic City Loading Script -->
+<script>
+document.getElementById('state').addEventListener('change', function() {
+  const selectedState = this.value;
+
+  fetch('/get_cities', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({state: selectedState})
+  })
+  .then(response => response.json())
+  .then(data => {
+    const citySelect = document.getElementById('city');
+    citySelect.innerHTML = '<option selected disabled>Select City</option>';
+    data.cities.forEach(city => {
+      const option = document.createElement('option');
+      option.value = city;
+      option.textContent = city;
+      citySelect.appendChild(option);
+    });
+  });
+});
+
+document.getElementById('logout').addEventListener('click', function(){
+  alert('Logged out!');
+});
+</script>
+
+</body>
+</html>
