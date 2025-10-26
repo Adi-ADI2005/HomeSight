@@ -24,7 +24,6 @@ catalogue==2.0.10
 certifi==2025.1.31
 cffi==1.17.1
 charset-normalizer==3.4.1
-ChatterBot==1.2.6
 chroma-hnswlib==0.7.6
 chromadb==1.0.0
 ci-info==0.3.0
@@ -275,5 +274,6 @@ zipp==3.21.0
 zope.event==5.1.1
 zope.interface==7.2
 zstandard==0.23.0
+
 
 
